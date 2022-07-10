@@ -74,4 +74,14 @@ Nest is [MIT licensed](LICENSE).
 
 ## 参考
 
+### 公式ドキュメント
+
+https://docs.nestjs.com
+
+### 日本語訳(ただし v7 なので参考程度に)
+
+https://zenn.dev/kisihara_c/books/nest-officialdoc-jp
+
+### 基本内容のまとめ
+
 https://qiita.com/suzuki0430/items/894e2da2b44156a2a437
