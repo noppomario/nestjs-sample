@@ -1,0 +1,248 @@
+paths:
+  /users:
+    post:
+      summary: ユーザの新規作成
+      description: 管理者のみ実行可能
+      tags: [ユーザ管理]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - email
+                - password
+                - role
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                  description: ユニーク制約
+                password:
+                  type: string
+                  format: password
+                  minLength: 8
+                  description: 最低1文字以上の数字/文字が必要
+                role:
+                  type: string
+                  enum: [user, admin]
+              example:
+                name: fake name
+                email: fake@example.com
+                password: password1
+                role: user
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        # '400': TODO
+        '401':
+          $ref: '../openapi.yaml#/components/responses/Unauthorized'
+        '403':
+          $ref: '../openapi.yaml#/components/responses/Forbidden'
+        '500':
+          $ref: '../openapi.yaml#/components/responses/InternalServerError'
+
+    get:
+      summary: ユーザの一括取得
+      description: 管理者のみ実行可能
+      tags: [ユーザ管理]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: name
+          schema:
+            type: string
+          description: ユーザ名
+        - in: query
+          name: role
+          schema:
+            type: string
+          description: 権限
+        - in: query
+          name: sortBy
+          schema:
+            type: string
+          description: <フィールド名>:desc/ascでソートする (ex. name:asc)
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            minimum: 1
+          default: 10
+          description: 取得するユーザ数の最大値
+        - in: query
+          name: page
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+          description: ページ番号
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
+                  page:
+                    type: integer
+                    example: 1
+                  limit:
+                    type: integer
+                    example: 10
+                  totalPages:
+                    type: integer
+                    example: 1
+                  totalResults:
+                    type: integer
+                    example: 1
+        '401':
+          $ref: '../openapi.yaml#/components/responses/Unauthorized'
+        '403':
+          $ref: '../openapi.yaml#/components/responses/Forbidden'
+        '500':
+          $ref: '../openapi.yaml#/components/responses/InternalServerError'
+
+  /users/{id}:
+    get:
+      summary: ユーザの単体取得
+      description: 自身のユーザ情報のみ取得できる。管理者は全ユーザの情報を取得できる。
+      tags: [ユーザ管理]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: User id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          $ref: '../openapi.yaml#/components/responses/Unauthorized'
+        '403':
+          $ref: '../openapi.yaml#/components/responses/Forbidden'
+        '404':
+          $ref: '../openapi.yaml#/components/responses/NotFound'
+        '500':
+          $ref: '../openapi.yaml#/components/responses/InternalServerError'
+
+    patch:
+      summary: ユーザの単体更新
+      description: 自身のユーザ情報のみ更新できる。管理者は全ユーザの情報を更新できる。
+      tags: [ユーザ管理]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ユーザID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                  description: ユニーク制約
+                password:
+                  type: string
+                  format: password
+                  minLength: 8
+                  description: 最低1文字以上の数字/文字が必要
+              example:
+                name: fake name
+                email: fake@example.com
+                password: password1
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        # '400': TODO
+        '401':
+          $ref: '../openapi.yaml#/components/responses/Unauthorized'
+        '403':
+          $ref: '../openapi.yaml#/components/responses/Forbidden'
+        '404':
+          $ref: '../openapi.yaml#/components/responses/NotFound'
+        '500':
+          $ref: '../openapi.yaml#/components/responses/InternalServerError'
+
+    delete:
+      summary: ユーザの単体削除
+      description: 自身のユーザ情報のみ更新できる。管理者は全ユーザの情報を更新できる。
+      tags: [ユーザ管理]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: User id
+      responses:
+        '200':
+          description: レスポンスボディなし
+        '401':
+          $ref: '../openapi.yaml#/components/responses/Unauthorized'
+        '403':
+          $ref: '../openapi.yaml#/components/responses/Forbidden'
+        '404':
+          $ref: '../openapi.yaml#/components/responses/NotFound'
+        '500':
+          $ref: '../openapi.yaml#/components/responses/InternalServerError'
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+          format: email
+        name:
+          type: string
+        role:
+          type: string
+          enum: [user, admin]
+      example:
+        id: 5ebac534954b54139806c112
+        email: fake@example.com
+        name: fake name
+        role: user
