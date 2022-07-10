@@ -6,7 +6,7 @@ import {
   Param,
   NotFoundException,
 } from '@nestjs/common';
-import { CreateMessageDto } from './create-message.dto';
+import { CreateMessageDto } from './dto/create-message.dto';
 import { MessagesService } from './messages.service';
 
 @Controller('messages')
