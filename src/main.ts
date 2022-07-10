@@ -1,11 +1,18 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { ConfigService } from '@nestjs/config';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  // const app = await NestFactory.create(MessagesModule);
+  app.setGlobalPrefix('api/v1');
   app.useGlobalPipes(new ValidationPipe());
-  await app.listen(3000);
+  const PORT = app.get(ConfigService).get('PORT');
+  await app.listen(PORT);
+  const NODE_ENV = app.get(ConfigService).get('NODE_ENV');
+  if (NODE_ENV === 'development') {
+    // eslint-disable-next-line no-console
+    console.log(`API documentation: http://localhost:${PORT}/`);
+  }
 }
 bootstrap();
