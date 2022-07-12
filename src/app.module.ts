@@ -10,6 +10,7 @@ import configuration from './config/configuration';
     ConfigModule.forRoot({ isGlobal: true, load: [configuration] }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'docs/openapi'),
+      serveRoot: '/openapi',
     }),
     UsersModule,
   ],
