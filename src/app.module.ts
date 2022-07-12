@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { join } from 'path';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { ConfigModule } from '@nestjs/config';
-import { MessagesModule } from './messages/messages.module';
+import { UsersModule } from './users/users.module';
 import configuration from './config/configuration';
 
 @Module({
@@ -11,7 +11,7 @@ import configuration from './config/configuration';
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'docs/openapi'),
     }),
-    MessagesModule,
+    UsersModule,
   ],
 })
 export class AppModule {}
