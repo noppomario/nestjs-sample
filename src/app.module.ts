@@ -7,6 +7,8 @@ import { DataSource } from 'typeorm';
 import { UsersModule } from './users/users.module';
 import configuration from './config/configuration';
 import { User } from './users/entities/user.entity';
+import { GlobalConfigModule } from './global-config/global-config.module';
+import { ConfigFileModule } from './config-file/config-file.module';
 
 @Module({
   imports: [
@@ -29,6 +31,8 @@ import { User } from './users/entities/user.entity';
     //   synchronize: true,
     //   entities: [User],
     // }),
+    ConfigFileModule,
+    GlobalConfigModule,
     UsersModule,
   ],
 })
