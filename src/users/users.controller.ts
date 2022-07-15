@@ -6,8 +6,10 @@ import {
   Patch,
   Param,
   Delete,
+  Inject,
 } from '@nestjs/common';
-import { UsersService } from './users.service';
+import { DITokenConstants } from 'src/common/constants/di-token-constants';
+import { UsersService } from './interfaces/users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
@@ -17,7 +19,10 @@ import { User } from './entities/user.entity';
  */
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    @Inject(DITokenConstants.USERS_SERVICE)
+    private readonly usersService: UsersService,
+  ) {}
 
   /**
    * 単体登録API

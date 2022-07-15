@@ -1,12 +1,22 @@
 import { Module } from '@nestjs/common';
 import { ParameterFileSharedModule } from 'src/shared/parameter-file-shared/parameter-file-shared.module';
-import { GlobalConfigService } from './global-config.service';
+import { DITokenConstants } from 'src/common/constants/di-token-constants';
 import { GlobalConfigController } from './global-config.controller';
-import { GlobalConfigRepository } from './global-config.repository';
+import { GlobalConfigRepositoryImpl } from './global-config.repository.impl';
+import { GlobalConfigServiceImpl } from './global-config.service.impl';
 
 @Module({
   imports: [ParameterFileSharedModule],
   controllers: [GlobalConfigController],
-  providers: [GlobalConfigService, GlobalConfigRepository],
+  providers: [
+    {
+      provide: DITokenConstants.GLOBAL_CONFIG_SERVICE,
+      useClass: GlobalConfigServiceImpl,
+    },
+    {
+      provide: DITokenConstants.GLOBAL_CONFIG_REPOSITORY,
+      useClass: GlobalConfigRepositoryImpl,
+    },
+  ],
 })
 export class GlobalConfigModule {}

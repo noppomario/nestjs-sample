@@ -1,15 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { GlobalConfigService } from './global-config.service';
+import { GlobalConfigServiceImpl } from './global-config.service.impl';
 
 describe('GlobalConfigService', () => {
-  let service: GlobalConfigService;
+  let service: GlobalConfigServiceImpl;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [GlobalConfigService],
+      providers: [GlobalConfigServiceImpl],
     }).compile();
 
-    service = module.get<GlobalConfigService>(GlobalConfigService);
+    service = module.get<GlobalConfigServiceImpl>(GlobalConfigServiceImpl);
   });
 
   it('should be defined', () => {

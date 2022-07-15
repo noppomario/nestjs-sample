@@ -1,11 +1,15 @@
-import { Controller, Get, Body, Patch, Param } from '@nestjs/common';
-import { GlobalConfigService } from './global-config.service';
+import { Controller, Get, Body, Patch, Inject } from '@nestjs/common';
+import { DITokenConstants } from 'src/common/constants/di-token-constants';
+import { GlobalConfigService } from './interfaces/global-config.service';
 import { UpdateGlobalConfigDto } from './dto/update-global-config.dto';
 import { GlobalConfig } from './entities/global-config.entity';
 
 @Controller('global-config')
 export class GlobalConfigController {
-  constructor(private readonly globalConfigService: GlobalConfigService) {}
+  constructor(
+    @Inject(DITokenConstants.GLOBAL_CONFIG_SERVICE)
+    private readonly globalConfigService: GlobalConfigService,
+  ) {}
 
   /**
    * 単体取得API
@@ -18,15 +22,15 @@ export class GlobalConfigController {
   }
 
   /**
-   * TODO: 単体更新API
+   * 単体更新API
    *
    * @param updateGlobalConfigDto 更新データ
    * @returns グローバル設定
    */
-  // @Patch()
-  // update(
-  //   @Body() updateGlobalConfigDto: UpdateGlobalConfigDto,
-  // ): Promise<GlobalConfig> {
-  //   return this.globalConfigService.updateConfig(updateGlobalConfigDto);
-  // }
+  @Patch()
+  update(
+    @Body() updateGlobalConfigDto: UpdateGlobalConfigDto,
+  ): Promise<GlobalConfig> {
+    return this.globalConfigService.updateConfig(updateGlobalConfigDto);
+  }
 }
