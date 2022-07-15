@@ -1,10 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { ConfigFileService } from 'src/config-file/config-file.service';
+import { ParameterFileSharedRepository } from 'src/shared/parameter-file-shared/parameter-file-shared.repository';
 import { GlobalConfig } from './entities/global-config.entity';
 
 @Injectable()
 export class GlobalConfigRepository {
-  constructor(private readonly configFileService: ConfigFileService) {}
+  constructor(
+    private readonly configFileService: ParameterFileSharedRepository,
+  ) {}
 
   /**
    * 設定ファイルのパス

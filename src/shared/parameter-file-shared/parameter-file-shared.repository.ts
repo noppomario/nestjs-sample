@@ -2,7 +2,7 @@ import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { readFile } from 'fs/promises';
 
 @Injectable()
-export class ConfigFileService {
+export class ParameterFileSharedRepository {
   /**
    * 設定ファイルをパースしてkey/valueのMapを返す
    *
