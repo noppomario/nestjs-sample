@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { DITokenConstants } from 'src/common/constants/di-token-constants';
-import { ParameterFileSharedRepository } from 'src/shared/parameter-file-shared/parameter-file-shared.repository';
+import { ParameterFileSharedRepository } from 'src/shared-modules/parameter-file-shared/parameter-file-shared.repository';
 import { GlobalConfig } from './entities/global-config.entity';
 import { GlobalConfigRepository } from './interfaces/global-config.repository';
 
