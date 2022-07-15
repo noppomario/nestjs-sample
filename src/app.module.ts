@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { join } from 'path';
 import { ServeStaticModule } from '@nestjs/serve-static';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { UsersModule } from './users/users.module';
@@ -16,12 +16,15 @@ import { GlobalConfigModule } from './global-config/global-config.module';
       rootPath: join(__dirname, '..', 'docs/openapi'),
       serveRoot: '/openapi',
     }),
-    TypeOrmModule.forRoot({
-      // name: 'usersdb', # TODO: 複数DB指定で接続できなくなる
-      type: 'sqlite',
-      database: 'db/users.db',
-      synchronize: true,
-      entities: [User],
+    TypeOrmModule.forRootAsync({
+      useFactory: (configService: ConfigService) => ({
+        // name: 'usersdb', # TODO: 複数DB指定で接続できなくなる
+        type: 'sqlite',
+        database: configService.get('DB_PATH_USERS'),
+        synchronize: true,
+        entities: [User],
+      }),
+      inject: [ConfigService],
     }),
     // TypeOrmModule.forRoot({
     //   name: 'logsdb',
