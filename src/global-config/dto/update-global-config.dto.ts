@@ -1,4 +1,17 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateGlobalConfigDto } from './create-global-config.dto';
+import { IsIP, IsOptional } from 'class-validator';
 
-export class UpdateGlobalConfigDto extends PartialType(CreateGlobalConfigDto) {}
+export class UpdateGlobalConfigDto {
+  /**
+   * グローバルIPアドレス
+   */
+  @IsOptional()
+  @IsIP(4)
+  globalIpAddress: string;
+
+  /**
+   * プライベートIPアドレス
+   */
+  @IsOptional()
+  @IsIP(4)
+  privateIpAddress: string;
+}

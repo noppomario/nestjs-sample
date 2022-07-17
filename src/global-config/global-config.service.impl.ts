@@ -19,13 +19,9 @@ export class GlobalConfigServiceImpl implements GlobalConfigService {
     return this.globalConfigRepository.findConfig();
   }
 
-  // TODO
-  updateConfig(
+  async updateConfig(
     updateGlobalConfigDto: UpdateGlobalConfigDto,
   ): Promise<GlobalConfig> {
-    // 設定更新
-    // 更新した設定どおりに設定変更
-    // 更新済設定を返す
-    throw new Error('Method not implemented.');
+    return this.globalConfigRepository.updateConfig(updateGlobalConfigDto);
   }
 }

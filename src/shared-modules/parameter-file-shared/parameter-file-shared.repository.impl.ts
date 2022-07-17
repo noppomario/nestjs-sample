@@ -1,5 +1,5 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
-import { readFile } from 'fs/promises';
+import { readFile, writeFile } from 'fs/promises';
 import { ParameterFileSharedRepository } from './parameter-file-shared.repository';
 
 /**
@@ -22,5 +22,18 @@ export class ParameterFileSharedRepositoryImpl
     });
 
     return confMap;
+  }
+
+  async update(
+    filePath: string,
+    paramsMap: Map<string, string>,
+  ): Promise<Map<string, string>> {
+    const confArray = [];
+    paramsMap.forEach((value, key) => {
+      confArray.push(`${key}=${value}`);
+    });
+
+    await writeFile(filePath, confArray.join('\n'), 'utf8');
+    return paramsMap;
   }
 }

@@ -33,12 +33,8 @@ export class UsersServiceImpl implements UsersService {
   }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
-    await this.usersRepository.save({ id, updateUserDto }); // TODO: 更新されない
-    const user = await this.usersRepository.findOneBy({ id });
-    if (!user) {
-      throw new NotFoundException();
-    }
-    return user;
+    await this.usersRepository.update({ id }, updateUserDto);
+    return this.usersRepository.findOneBy({ id });
   }
 
   async remove(id: number): Promise<void> {

@@ -1,3 +1,4 @@
+import { UpdateGlobalConfigDto } from '../dto/update-global-config.dto';
 import { GlobalConfig } from '../entities/global-config.entity';
 
 /**
@@ -13,10 +14,11 @@ export interface GlobalConfigRepository {
 
   /**
    * グローバル設定を更新する
-   * - 設定ファイル更新
-   * - 設定変更
    *
+   * @param updateGlobalConfigDto 更新データ
    * @returns グローバル設定のPromise
    */
-  updateConfig(): Promise<GlobalConfig>;
+  updateConfig(
+    updateGlobalConfigDto: UpdateGlobalConfigDto,
+  ): Promise<GlobalConfig>;
 }
