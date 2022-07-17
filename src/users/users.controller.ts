@@ -9,6 +9,7 @@ import {
   Inject,
 } from '@nestjs/common';
 import { DITokenConstants } from 'src/common/constants/di-token-constants';
+import { UpdateDtoFillter } from 'src/common/utils/update-dto-fillter';
 import { UsersService } from './interfaces/users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -52,8 +53,8 @@ export class UsersController {
    * @returns 指定したIDのUserを内包したPromiseオブジェクト
    */
   @Get(':id')
-  findOne(@Param('id') id: string): Promise<User> {
-    return this.usersService.findOne(+id);
+  findOne(@Param('id') id: number): Promise<User> {
+    return this.usersService.findOne(id);
   }
 
   /**
@@ -65,10 +66,11 @@ export class UsersController {
    */
   @Patch(':id')
   update(
-    @Param('id') id: string,
+    @Param('id') id: number,
     @Body() updateUserDto: UpdateUserDto,
   ): Promise<User> {
-    return this.usersService.update(+id, updateUserDto);
+    const dto: UpdateUserDto = UpdateDtoFillter.nullFillter(updateUserDto);
+    return this.usersService.update(id, dto);
   }
 
   /**
@@ -78,7 +80,7 @@ export class UsersController {
    * @returns レスポンスなし
    */
   @Delete(':id')
-  remove(@Param('id') id: string): Promise<void> {
-    return this.usersService.remove(+id);
+  remove(@Param('id') id: number): Promise<void> {
+    return this.usersService.remove(id);
   }
 }

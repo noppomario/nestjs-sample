@@ -18,7 +18,9 @@ export class ParameterFileSharedRepositoryImpl
     const confMap = new Map();
     config.split('\n').forEach((line) => {
       const [key, value] = line.split('=');
-      confMap.set(key, value);
+      if (key) {
+        confMap.set(key, value);
+      }
     });
 
     return confMap;

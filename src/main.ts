@@ -1,4 +1,8 @@
-import { ValidationPipe, VersioningType } from '@nestjs/common';
+import {
+  ValidationPipe,
+  ValidationPipeOptions,
+  VersioningType,
+} from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
 import helmet from 'helmet';
@@ -17,7 +21,10 @@ async function bootstrap() {
   });
 
   // 全URLでバリデーション有効化
-  app.useGlobalPipes(new ValidationPipe());
+  const validOptions: ValidationPipeOptions = {
+    whitelist: true, // 未定義パラメータを取り除く
+  };
+  app.useGlobalPipes(new ValidationPipe(validOptions));
 
   // HTTPヘッダのセキュア化
   if (NODE_ENV === 'production') {
