@@ -1,14 +1,15 @@
-import { Column, Entity } from 'typeorm';
-
 /**
  * グローバル設定
  */
-@Entity()
 export class GlobalConfig {
-  @Column()
+  /**
+   * グローバルIPアドレス
+   */
   globalIpAddress: string;
 
-  @Column()
+  /**
+   * プライベートIPアドレス
+   */
   privateIpAddress: string;
 
   /**

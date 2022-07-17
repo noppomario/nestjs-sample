@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Constants } from 'src/common/constants/constants';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -12,7 +13,7 @@ import { UsersService } from './interfaces/users.service';
 @Injectable()
 export class UsersServiceImpl implements UsersService {
   constructor(
-    @InjectRepository(User)
+    @InjectRepository(User, Constants.DB_CONNECTION_USERS)
     private readonly usersRepository: Repository<User>,
   ) {}
 
