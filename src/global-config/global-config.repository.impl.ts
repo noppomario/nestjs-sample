@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { DITokenConstants } from 'src/common/constants/di-token-constants';
 import { ParameterFileSharedRepository } from 'src/shared-modules/parameter-file-shared/parameter-file-shared.repository';
 import { UpdateGlobalConfigDto } from './dto/update-global-config.dto';
@@ -10,15 +11,20 @@ import { GlobalConfigRepository } from './interfaces/global-config.repository';
  */
 @Injectable()
 export class GlobalConfigRepositoryImpl implements GlobalConfigRepository {
-  constructor(
-    @Inject(DITokenConstants.PARAMETER_FILE_SHARED_REPOSITORY)
-    private readonly paramsFileRepo: ParameterFileSharedRepository,
-  ) {}
-
   /**
    * 設定ファイルのパス
    */
-  private readonly globalConfigFilePath = 'db/global-config.conf';
+  private readonly globalConfigFilePath: string;
+
+  constructor(
+    @Inject(DITokenConstants.PARAMETER_FILE_SHARED_REPOSITORY)
+    private readonly paramsFileRepo: ParameterFileSharedRepository,
+    private readonly configService: ConfigService,
+  ) {
+    this.globalConfigFilePath = configService.get<string>(
+      'FILE_PATH_GLOBAL_CONFIG',
+    );
+  }
 
   async findConfig(): Promise<GlobalConfig> {
     const confMap = await this.paramsFileRepo.parse(this.globalConfigFilePath);
