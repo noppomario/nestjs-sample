@@ -1,14 +1,10 @@
 import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { join } from 'path';
 import { ServeStaticModule } from '@nestjs/serve-static';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from './users/users.module';
 import envConfig from './common/config/env-configuration';
-import { User } from './users/entities/user.entity';
 import { GlobalConfigModule } from './global-config/global-config.module';
-import { Log } from './logs/entities/logs.entity';
-import { Constants } from './common/constants/constants';
 import { LogsModule } from './logs/logs.module';
 import { LogsMiddleware } from './common/middlewares/logs.middleware';
 import { DbSharedModule } from './shared-modules/db-shared/db-shared.module';
