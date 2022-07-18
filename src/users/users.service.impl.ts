@@ -1,10 +1,11 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Constants } from 'src/common/constants/constants';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
+import { UserNotFoundException } from './exceptions/user-not-found.exception';
 import { UsersService } from './interfaces/users.service';
 
 /**
@@ -12,6 +13,8 @@ import { UsersService } from './interfaces/users.service';
  */
 @Injectable()
 export class UsersServiceImpl implements UsersService {
+  private readonly logger = new Logger(UsersServiceImpl.name);
+
   constructor(
     @InjectRepository(User, Constants.DB_CONNECTION_USERS)
     private readonly usersRepository: Repository<User>,
@@ -30,7 +33,8 @@ export class UsersServiceImpl implements UsersService {
   async findOne(id: number): Promise<User> {
     const user = await this.usersRepository.findOneBy({ id });
     if (!user) {
-      throw new HttpException('ユーザが見つかりません。', HttpStatus.NOT_FOUND);
+      this.logger.warn('Tried to access a user that does not exist');
+      throw new UserNotFoundException(id);
     }
     return user;
   }
@@ -39,7 +43,7 @@ export class UsersServiceImpl implements UsersService {
     await this.usersRepository.update({ id }, updateUserDto);
     const updatedUser = await this.usersRepository.findOneBy({ id });
     if (!updatedUser) {
-      throw new HttpException('ユーザが見つかりません。', HttpStatus.NOT_FOUND);
+      throw new UserNotFoundException(id);
     }
     return updatedUser;
   }
@@ -47,7 +51,7 @@ export class UsersServiceImpl implements UsersService {
   async remove(id: number): Promise<void> {
     const deleteResponse = await this.usersRepository.delete(id);
     if (!deleteResponse.affected) {
-      throw new HttpException('ユーザが見つかりません。', HttpStatus.NOT_FOUND);
+      throw new UserNotFoundException(id);
     }
   }
 }

@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { join } from 'path';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -10,6 +10,7 @@ import { GlobalConfigModule } from './global-config/global-config.module';
 import { Log } from './logs/entities/logs.entity';
 import { Constants } from './common/constants/constants';
 import { LogsModule } from './logs/logs.module';
+import { LogsMiddleware } from './common/middlewares/logs.middleware';
 
 @Module({
   imports: [
@@ -50,4 +51,8 @@ import { LogsModule } from './logs/logs.module';
     UsersModule,
   ],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LogsMiddleware).forRoutes('*');
+  }
+}
