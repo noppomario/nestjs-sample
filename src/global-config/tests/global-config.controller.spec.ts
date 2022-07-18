@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { GlobalConfigController } from './global-config.controller';
-import { GlobalConfigServiceImpl } from './global-config.service.impl';
+import { GlobalConfigController } from '../global-config.controller';
+import { GlobalConfigServiceImpl } from '../global-config.service.impl';
 
 describe('GlobalConfigController', () => {
   let controller: GlobalConfigController;

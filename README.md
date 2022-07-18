@@ -54,3 +54,11 @@ https://zenn.dev/kisihara_c/books/nest-officialdoc-jp
 ### 公式サンプル
 
 https://github.com/nestjs/nest/tree/master/sample
+
+### チュートリアル
+
+https://wanago.io/2020/05/11/nestjs-api-controllers-routing-module/
+
+### チュートリアルサンプル
+
+https://github.com/mwanago/nestjs-typescript
