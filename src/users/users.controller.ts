@@ -53,8 +53,8 @@ export class UsersController {
    * @returns 指定したIDのUserを内包したPromiseオブジェクト
    */
   @Get(':id')
-  findOne(@Param('id') id: number): Promise<User> {
-    return this.usersService.findOne(id);
+  findOne(@Param('id') id: string): Promise<User> {
+    return this.usersService.findOne(Number(id));
   }
 
   /**
@@ -66,11 +66,11 @@ export class UsersController {
    */
   @Patch(':id')
   update(
-    @Param('id') id: number,
+    @Param('id') id: string,
     @Body() updateUserDto: UpdateUserDto,
   ): Promise<User> {
     const dto: UpdateUserDto = UpdateDtoFillter.nullFillter(updateUserDto);
-    return this.usersService.update(id, dto);
+    return this.usersService.update(Number(id), dto);
   }
 
   /**
@@ -80,7 +80,7 @@ export class UsersController {
    * @returns レスポンスなし
    */
   @Delete(':id')
-  remove(@Param('id') id: number): Promise<void> {
-    return this.usersService.remove(id);
+  remove(@Param('id') id: string): Promise<void> {
+    return this.usersService.remove(Number(id));
   }
 }
