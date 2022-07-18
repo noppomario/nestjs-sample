@@ -44,7 +44,7 @@ export class CreateUserDto {
    * - 必須入力
    * - 空文字またはメールアドレス形式の文字列
    */
-  @ValidateIf((o, v) => v == null || v === undefined || v !== '')
+  @ValidateIf((o, v) => v !== '')
   @IsEmail({}, { message: 'メールアドレスのフォーマットが不正です。' })
   email: string;
 }

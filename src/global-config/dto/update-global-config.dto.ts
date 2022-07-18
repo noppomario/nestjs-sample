@@ -1,10 +1,11 @@
-import { IsIP, IsOptional } from 'class-validator';
+import { IsIP, IsOptional, ValidateIf } from 'class-validator';
 
 export class UpdateGlobalConfigDto {
   /**
    * グローバルIPアドレス
    */
   @IsOptional()
+  @ValidateIf((o, v) => v !== '')
   @IsIP(4, { message: 'グローバルIPアドレスのフォーマットが不正です。' })
   globalIpAddress: string;
 
