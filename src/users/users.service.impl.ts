@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Constants } from 'src/common/constants/constants';
 import { Repository } from 'typeorm';
@@ -18,7 +18,9 @@ export class UsersServiceImpl implements UsersService {
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
-    return this.usersRepository.save(createUserDto);
+    const newUser = this.usersRepository.create(createUserDto);
+    await this.usersRepository.save(newUser);
+    return newUser;
   }
 
   async findAll(): Promise<User[]> {
@@ -28,18 +30,24 @@ export class UsersServiceImpl implements UsersService {
   async findOne(id: number): Promise<User> {
     const user = await this.usersRepository.findOneBy({ id });
     if (!user) {
-      throw new NotFoundException();
+      throw new HttpException('ユーザが見つかりません。', HttpStatus.NOT_FOUND);
     }
     return user;
   }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
     await this.usersRepository.update({ id }, updateUserDto);
-    return this.usersRepository.findOneBy({ id });
+    const updatedUser = await this.usersRepository.findOneBy({ id });
+    if (!updatedUser) {
+      throw new HttpException('ユーザが見つかりません。', HttpStatus.NOT_FOUND);
+    }
+    return updatedUser;
   }
 
   async remove(id: number): Promise<void> {
-    const user = await this.usersRepository.findOneBy({ id });
-    await this.usersRepository.delete(user);
+    const deleteResponse = await this.usersRepository.delete(id);
+    if (!deleteResponse.affected) {
+      throw new HttpException('ユーザが見つかりません。', HttpStatus.NOT_FOUND);
+    }
   }
 }
