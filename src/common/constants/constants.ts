@@ -1,3 +1,6 @@
+/**
+ * 定数定義
+ */
 export class Constants {
   /**
    * DB接続用の識別子(users)

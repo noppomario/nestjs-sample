@@ -44,9 +44,7 @@
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
     "sqlite3": "^5.0.8",
-    "typeorm": "^0.3.7",
-    "winston": "^3.8.1",
-    "winston-daily-rotate-file": "^4.7.1"
+    "typeorm": "^0.3.7"
   },
   "devDependencies": {
     "@nestjs/cli": "^9.0.0",

@@ -1,3 +1,4 @@
+import { Transform } from 'class-transformer';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 /**
@@ -25,7 +26,15 @@ export class User {
 
   /**
    * メールアドレス
+   * - データは暗号化されてDBに保存されている
+   * [APIレスポンス返却時の動作]
+   * - 設定済かどうかを判断できるようマスク文字列を返す
    */
   @Column()
+  @Transform(({ value }) => (value ? '********' : ''))
   email: string;
+
+  constructor(partial: Partial<User>) {
+    Object.assign(this, partial);
+  }
 }

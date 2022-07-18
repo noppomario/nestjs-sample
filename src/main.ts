@@ -1,12 +1,15 @@
 import {
+  ClassSerializerInterceptor,
   ValidationPipe,
   ValidationPipeOptions,
   VersioningType,
 } from '@nestjs/common';
-import { NestFactory } from '@nestjs/core';
+import { NestFactory, Reflector } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
 import helmet from 'helmet';
 import { AppModule } from './app.module';
+import { HttpExceptionFilter } from './common/exception-fillters/http-exception.fillter';
+import { TransformInterceptor } from './common/interceptors/transform.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -22,11 +25,24 @@ async function bootstrap() {
     defaultVersion: '1',
   });
 
-  // 全URLでバリデーション有効化
+  // 全URLで有効化するPipe
+  // - リクエストのバリデーション
   const validOptions: ValidationPipeOptions = {
     whitelist: true, // 未定義パラメータを取り除く
   };
   app.useGlobalPipes(new ValidationPipe(validOptions));
+
+  // 全URLで有効化するInterceptor
+  // - Entityをレスポンス定義に合わせて修正(Serialization)
+  // - 共通レスポンス化
+  app.useGlobalInterceptors(
+    new ClassSerializerInterceptor(app.get(Reflector)),
+    new TransformInterceptor(),
+  );
+
+  // 全URLで有効化するException Fillter
+  // - 共通レスポンス化/組み込み例外の日本語化
+  app.useGlobalFilters(new HttpExceptionFilter());
 
   // HTTPヘッダのセキュア化
   if (NODE_ENV === 'production') {

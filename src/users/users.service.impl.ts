@@ -1,11 +1,10 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Constants } from 'src/common/constants/constants';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
-import { UserNotFoundException } from './exceptions/user-not-found.exception';
 import { UsersService } from './interfaces/users.service';
 
 /**
@@ -34,7 +33,7 @@ export class UsersServiceImpl implements UsersService {
     const user = await this.usersRepository.findOneBy({ id });
     if (!user) {
       this.logger.warn('Tried to access a user that does not exist');
-      throw new UserNotFoundException(id);
+      throw new NotFoundException();
     }
     return user;
   }
@@ -43,7 +42,7 @@ export class UsersServiceImpl implements UsersService {
     await this.usersRepository.update({ id }, updateUserDto);
     const updatedUser = await this.usersRepository.findOneBy({ id });
     if (!updatedUser) {
-      throw new UserNotFoundException(id);
+      throw new NotFoundException();
     }
     return updatedUser;
   }
@@ -51,7 +50,7 @@ export class UsersServiceImpl implements UsersService {
   async remove(id: number): Promise<void> {
     const deleteResponse = await this.usersRepository.delete(id);
     if (!deleteResponse.affected) {
-      throw new UserNotFoundException(id);
+      throw new NotFoundException();
     }
   }
 }
