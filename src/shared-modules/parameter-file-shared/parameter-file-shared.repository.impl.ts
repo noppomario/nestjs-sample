@@ -30,7 +30,7 @@ export class ParameterFileSharedRepositoryImpl
     filePath: string,
     paramsMap: Map<string, string>,
   ): Promise<Map<string, string>> {
-    const confArray = [];
+    const confArray: Array<string> = [];
     paramsMap.forEach((value, key) => {
       confArray.push(`${key}=${value}`);
     });
