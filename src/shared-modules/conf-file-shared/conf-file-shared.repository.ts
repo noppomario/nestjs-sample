@@ -1,7 +1,7 @@
 /**
  * 設定ファイルを扱うリポジトリの共通処理のインターフェース
  */
-export interface ParameterFileSharedRepository {
+export interface ConfFileSharedRepository {
   /**
    * 設定ファイルをパースしてkey/valueのMapを返す
    *

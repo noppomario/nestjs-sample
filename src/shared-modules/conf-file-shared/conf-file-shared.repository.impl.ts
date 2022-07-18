@@ -1,14 +1,12 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { readFile, writeFile } from 'fs/promises';
-import { ParameterFileSharedRepository } from './parameter-file-shared.repository';
+import { ConfFileSharedRepository } from './conf-file-shared.repository';
 
 /**
  * 設定ファイルを扱うリポジトリの共通処理の実装クラス
  */
 @Injectable()
-export class ParameterFileSharedRepositoryImpl
-  implements ParameterFileSharedRepository
-{
+export class ConfFileSharedRepositoryImpl implements ConfFileSharedRepository {
   async parse(filePath: string): Promise<Map<string, string>> {
     const config = await readFile(filePath, 'utf8');
     if (!config) {

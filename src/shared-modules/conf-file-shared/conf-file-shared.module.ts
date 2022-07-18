@@ -1,19 +1,19 @@
 import { Module } from '@nestjs/common';
 import { DITokenConstants } from 'src/common/constants/di-token-constants';
-import { ParameterFileSharedRepositoryImpl } from './parameter-file-shared.repository.impl';
+import { ConfFileSharedRepositoryImpl } from './conf-file-shared.repository.impl';
 
 @Module({
   providers: [
     {
       provide: DITokenConstants.PARAMETER_FILE_SHARED_REPOSITORY,
-      useClass: ParameterFileSharedRepositoryImpl,
+      useClass: ConfFileSharedRepositoryImpl,
     },
   ],
   exports: [
     {
       provide: DITokenConstants.PARAMETER_FILE_SHARED_REPOSITORY,
-      useClass: ParameterFileSharedRepositoryImpl,
+      useClass: ConfFileSharedRepositoryImpl,
     },
   ],
 })
-export class ParameterFileSharedModule {}
+export class ConfFileSharedModule {}
