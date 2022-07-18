@@ -1,3 +1,5 @@
+import { GlobalConfigConstants } from '../global-config.constants';
+
 /**
  * グローバル設定
  */
@@ -20,8 +22,12 @@ export class GlobalConfig {
    */
   static fromMap(map: Map<string, string>): GlobalConfig {
     const entity = new GlobalConfig();
-    entity.globalIpAddress = map.get('GLOBAL_IP_ADDRESS');
-    entity.privateIpAddress = map.get('PRIVATE_IP_ADDRESS');
+    entity.globalIpAddress = map.get(
+      GlobalConfigConstants.PARAMS_GLOBAL_IP_ADDRESS,
+    );
+    entity.privateIpAddress = map.get(
+      GlobalConfigConstants.PARAMS_PRIVATE_IP_ADDRESS,
+    );
 
     return entity;
   }

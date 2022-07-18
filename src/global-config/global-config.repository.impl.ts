@@ -4,6 +4,7 @@ import { DITokenConstants } from 'src/common/constants/di-token-constants';
 import { ParameterFileSharedRepository } from 'src/shared-modules/parameter-file-shared/parameter-file-shared.repository';
 import { UpdateGlobalConfigDto } from './dto/update-global-config.dto';
 import { GlobalConfig } from './entities/global-config.entity';
+import { GlobalConfigConstants } from './global-config.constants';
 import { GlobalConfigRepository } from './interfaces/global-config.repository';
 
 /**
@@ -36,10 +37,16 @@ export class GlobalConfigRepositoryImpl implements GlobalConfigRepository {
   ): Promise<GlobalConfig> {
     const confMap = await this.paramsFileRepo.parse(this.globalConfigFilePath);
     if (updateGlobalConfigDto.globalIpAddress) {
-      confMap.set('GLOBAL_IP_ADDRESS', updateGlobalConfigDto.globalIpAddress);
+      confMap.set(
+        GlobalConfigConstants.PARAMS_GLOBAL_IP_ADDRESS,
+        updateGlobalConfigDto.globalIpAddress,
+      );
     }
     if (updateGlobalConfigDto.privateIpAddress) {
-      confMap.set('PRIVATE_IP_ADDRESS', updateGlobalConfigDto.privateIpAddress);
+      confMap.set(
+        GlobalConfigConstants.PARAMS_PRIVATE_IP_ADDRESS,
+        updateGlobalConfigDto.privateIpAddress,
+      );
     }
 
     await this.paramsFileRepo.update(this.globalConfigFilePath, confMap);
