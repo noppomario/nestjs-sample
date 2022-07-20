@@ -1,4 +1,4 @@
-openapi: '3.1.0'
+openapi: '3.0.3'
 
 info:
   title: API仕様書
@@ -63,7 +63,9 @@ components:
         details:
           type: array
           items:
-            - code:
+            type: object
+            properties:
+              code:
                 type: number
               message:
                 type: string
