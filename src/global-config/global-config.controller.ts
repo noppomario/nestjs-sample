@@ -1,13 +1,15 @@
 import { Controller, Get, Body, Patch, Inject } from '@nestjs/common';
-import { DITokenConstants } from 'src/common/constants/di-token-constants';
-import { GlobalConfigService } from './interfaces/global-config.service';
+import {
+  GlobalConfigService,
+  GLOBAL_CONFIG_SERVICE,
+} from './interfaces/global-config.service';
 import { UpdateGlobalConfigDto } from './dto/update-global-config.dto';
 import { GlobalConfig } from './entities/global-config.entity';
 
 @Controller('global-config')
 export class GlobalConfigController {
   constructor(
-    @Inject(DITokenConstants.GLOBAL_CONFIG_SERVICE)
+    @Inject(GLOBAL_CONFIG_SERVICE)
     private readonly globalConfigService: GlobalConfigService,
   ) {}
 

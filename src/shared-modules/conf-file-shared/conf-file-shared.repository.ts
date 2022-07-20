@@ -1,4 +1,9 @@
 /**
+ * DI用トークン
+ */
+export const CONF_FILE_SHARED_REPOSITORY = Symbol('di-token');
+
+/**
  * 設定ファイルを扱うリポジトリの共通処理のインターフェース
  */
 export interface ConfFileSharedRepository {

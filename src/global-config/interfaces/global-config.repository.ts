@@ -2,6 +2,11 @@ import { UpdateGlobalConfigDto } from '../dto/update-global-config.dto';
 import { GlobalConfig } from '../entities/global-config.entity';
 
 /**
+ * DI用トークン
+ */
+export const GLOBAL_CONFIG_REPOSITORY = Symbol('di-token');
+
+/**
  *グローバル設定リポジトリのインターフェース
  */
 export interface GlobalConfigRepository {

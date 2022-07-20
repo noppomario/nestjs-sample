@@ -8,9 +8,8 @@ import {
   Delete,
   Inject,
 } from '@nestjs/common';
-import { DITokenConstants } from 'src/common/constants/di-token-constants';
 import { UpdateDtoFillter } from 'src/common/utils/update-dto-fillter';
-import { UsersService } from './interfaces/users.service';
+import { UsersService, USERS_SERVICE } from './interfaces/users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
@@ -21,7 +20,7 @@ import { User } from './entities/user.entity';
 @Controller('users')
 export class UsersController {
   constructor(
-    @Inject(DITokenConstants.USERS_SERVICE)
+    @Inject(USERS_SERVICE)
     private readonly usersService: UsersService,
   ) {}
 

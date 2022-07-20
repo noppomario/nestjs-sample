@@ -3,6 +3,11 @@ import { UpdateUserDto } from '../dto/update-user.dto';
 import { User } from '../entities/user.entity';
 
 /**
+ * DI用トークン
+ */
+export const USERS_SERVICE = Symbol('di-token');
+
+/**
  * Usersサービスのインターフェース
  */
 export interface UsersService {

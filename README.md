@@ -41,6 +41,15 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
+## Tips
+
+### Non-class-based provider tokensについて
+
+JavaScriptにはinterfaceが存在しないため、TypeScriptのinterfaceは値の型として使用することはできない。  
+DIにTypeScriptのinterfaceを指定した場合、トランスパイル後にはオブジェクトの値が空になってしまう。  
+しかし、別途トークンを値として提供し、injectデコレータを使用することで、この問題を解決することができる。  
+文字列だと定義自体が一意である必要があり考慮事項/ルールが増えるため、シンボルを使って定義する。  
+
 ## 参考
 
 ### 公式ドキュメント
