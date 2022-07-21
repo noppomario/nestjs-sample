@@ -5,10 +5,11 @@ import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from './users/users.module';
 import envConfig from './common/config/env-configuration';
 import { GlobalConfigModule } from './global-config/global-config.module';
-import { LogsModule } from './logs/logs.module';
 import { LogsMiddleware } from './common/middlewares/logs.middleware';
-import { DbSharedModule } from './shared-modules/db-shared/db-shared.module';
 
+/**
+ * アプリケーション本体
+ */
 @Module({
   imports: [
     // 環境変数モジュール
@@ -20,12 +21,8 @@ import { DbSharedModule } from './shared-modules/db-shared/db-shared.module';
       serveRoot: '/openapi',
     }),
 
-    // DB接続モジュール
-    DbSharedModule,
-
     // 各種APIモジュール
     GlobalConfigModule,
-    LogsModule,
     UsersModule,
   ],
 })

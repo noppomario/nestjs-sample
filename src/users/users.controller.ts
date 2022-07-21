@@ -9,10 +9,10 @@ import {
   Inject,
 } from '@nestjs/common';
 import { UpdateDtoFillter } from 'src/common/utils/update-dto-fillter';
+import { users } from '@prisma/client';
 import { UsersService, USERS_SERVICE } from './interfaces/users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { User } from './entities/user.entity';
 
 /**
  * Usersコントローラ
@@ -31,7 +31,7 @@ export class UsersController {
    * @returns 登録したUserを内包したPromiseオブジェクト
    */
   @Post()
-  create(@Body() createUserDto: CreateUserDto): Promise<User> {
+  create(@Body() createUserDto: CreateUserDto): Promise<users> {
     return this.usersService.create(createUserDto);
   }
 
@@ -41,7 +41,7 @@ export class UsersController {
    * @returns User配列を内包したPromiseオブジェクト
    */
   @Get()
-  findAll(): Promise<User[]> {
+  findAll(): Promise<users[]> {
     return this.usersService.findAll();
   }
 
@@ -52,7 +52,7 @@ export class UsersController {
    * @returns 指定したIDのUserを内包したPromiseオブジェクト
    */
   @Get(':id')
-  findOne(@Param('id') id: number): Promise<User> {
+  findOne(@Param('id') id: number): Promise<users> {
     return this.usersService.findOne(id);
   }
 
@@ -67,7 +67,7 @@ export class UsersController {
   update(
     @Param('id') id: number,
     @Body() updateUserDto: UpdateUserDto,
-  ): Promise<User> {
+  ): Promise<users> {
     const dto: UpdateUserDto = UpdateDtoFillter.nullFillter(updateUserDto);
     return this.usersService.update(id, dto);
   }

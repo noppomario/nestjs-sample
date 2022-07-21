@@ -1,0 +1,7 @@
+-- CreateTable
+CREATE TABLE "logs" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "kind" INTEGER NOT NULL DEFAULT 0,
+    "message" TEXT NOT NULL DEFAULT '',
+    "created_at" DATETIME NOT NULL
+);

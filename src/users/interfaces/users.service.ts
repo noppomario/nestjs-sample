@@ -1,6 +1,6 @@
+import { users } from '@prisma/client';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
-import { User } from '../entities/user.entity';
 
 /**
  * DI用トークン
@@ -18,14 +18,14 @@ export interface UsersService {
    * @returns 登録したUserを内包したPromiseオブジェクト
    * @throws DB更新失敗
    */
-  create(createUserDto: CreateUserDto): Promise<User>;
+  create(createUserDto: CreateUserDto): Promise<users>;
 
   /**
    * 一括取得処理
    *
    * @returns User配列を内包したPromiseオブジェクト
    */
-  findAll(): Promise<User[]>;
+  findAll(): Promise<users[]>;
 
   /**
    * 単体取得処理
@@ -34,7 +34,7 @@ export interface UsersService {
    * @returns 指定したIDのUserを内包したPromiseオブジェクト
    * @throws NotFoundException 指定したIDのUserが存在しない
    */
-  findOne(id: number): Promise<User>;
+  findOne(id: number): Promise<users>;
 
   /**
    * 単体更新処理
@@ -45,7 +45,7 @@ export interface UsersService {
    * @throws NotFoundException 指定したIDのUserが存在しない
    * @throws DB更新失敗
    */
-  update(id: number, updateUserDto: UpdateUserDto): Promise<User>;
+  update(id: number, updateUserDto: UpdateUserDto): Promise<users>;
 
   /**
    * 単体削除処理

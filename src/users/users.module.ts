@@ -1,13 +1,11 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Constants } from 'src/common/constants/constants';
+import { PrismaSharedModule } from 'src/shared-modules/prisma-shared/prisma-shared.module';
 import { UsersController } from './users.controller';
-import { User } from './entities/user.entity';
 import { UsersServiceImpl } from './users.service.impl';
 import { USERS_SERVICE } from './interfaces/users.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User], Constants.DB_CONNECTION_USERS)],
+  imports: [PrismaSharedModule],
   controllers: [UsersController],
   providers: [
     {
@@ -15,5 +13,6 @@ import { USERS_SERVICE } from './interfaces/users.service';
       useClass: UsersServiceImpl,
     },
   ],
+  exports: [USERS_SERVICE],
 })
 export class UsersModule {}

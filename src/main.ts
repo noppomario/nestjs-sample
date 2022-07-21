@@ -10,13 +10,24 @@ import helmet from 'helmet';
 import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './common/exception-fillters/http-exception.fillter';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor';
+import { UsersdbPrismaSharedService } from './shared-modules/prisma-shared/usersdb-prisma-shared.service';
+import { LogsdbPrismaSharedService } from './shared-modules/prisma-shared/logsdb-prisma-shared.service';
 
+/**
+ * エントリポイント
+ */
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger: ['error', 'warn', 'log', 'verbose', 'debug'],
   });
 
   const NODE_ENV = app.get(ConfigService).get('NODE_ENV');
+
+  // Prisma用シャットダウン設定
+  const usersdbPrismaService = app.get(UsersdbPrismaSharedService);
+  await usersdbPrismaService.enableShutdownHooks(app);
+  const logsdbPrismaService = app.get(LogsdbPrismaSharedService);
+  await logsdbPrismaService.enableShutdownHooks(app);
 
   // ベースURL設定
   app.setGlobalPrefix('api');

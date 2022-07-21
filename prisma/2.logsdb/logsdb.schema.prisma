@@ -1,0 +1,19 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../../node_modules/@internal/prisma/client"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DB_PATH_LOGS")
+}
+
+model logs {
+  id         Int      @default(autoincrement()) @id
+  kind       Int      @default(0)
+  message    String   @default("")
+  created_at DateTime
+}
