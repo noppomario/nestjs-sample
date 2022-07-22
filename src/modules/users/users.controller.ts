@@ -7,6 +7,8 @@ import {
   Param,
   Delete,
   Inject,
+  ParseIntPipe,
+  HttpStatus,
 } from '@nestjs/common';
 import { users } from '@prisma/client';
 import { UpdateDtoFillter } from 'src/utils/update-dto-fillter';
@@ -52,7 +54,13 @@ export class UsersController {
    * @returns 指定したIDのUserを内包したPromiseオブジェクト
    */
   @Get(':id')
-  findOne(@Param('id') id: number): Promise<users> {
+  findOne(
+    @Param(
+      'id',
+      new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_FOUND }),
+    )
+    id: number,
+  ): Promise<users> {
     return this.usersService.findOne(id);
   }
 
@@ -65,7 +73,11 @@ export class UsersController {
    */
   @Patch(':id')
   update(
-    @Param('id') id: number,
+    @Param(
+      'id',
+      new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_FOUND }),
+    )
+    id: number,
     @Body() updateUserDto: UpdateUserDto,
   ): Promise<users> {
     const dto: UpdateUserDto = UpdateDtoFillter.nullFillter(updateUserDto);
@@ -79,7 +91,13 @@ export class UsersController {
    * @returns レスポンスなし
    */
   @Delete(':id')
-  remove(@Param('id') id: number): Promise<void> {
+  remove(
+    @Param(
+      'id',
+      new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_FOUND }),
+    )
+    id: number,
+  ): Promise<void> {
     return this.usersService.remove(id);
   }
 }
