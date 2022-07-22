@@ -1,9 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import {
-  ConfFileSharedRepository,
-  CONF_FILE_SHARED_REPOSITORY,
-} from '../conf-file-shared/conf-file-shared.repository';
+  ConfFileRepository,
+  CONF_FILE_REPOSITORY,
+} from '../conf-file/conf-file.repository';
 import { UpdateGlobalConfigDto } from './dto/update-global-config.dto';
 import { GlobalConfig } from './entities/global-config.entity';
 import { GlobalConfigConstants } from './global-config.constants';
@@ -20,8 +20,8 @@ export class GlobalConfigRepositoryImpl implements GlobalConfigRepository {
   private readonly globalConfigFilePath: string;
 
   constructor(
-    @Inject(CONF_FILE_SHARED_REPOSITORY)
-    private readonly paramsFileRepo: ConfFileSharedRepository,
+    @Inject(CONF_FILE_REPOSITORY)
+    private readonly confFileRepo: ConfFileRepository,
     private readonly configService: ConfigService,
   ) {
     this.globalConfigFilePath = configService.get<string>(
@@ -30,14 +30,14 @@ export class GlobalConfigRepositoryImpl implements GlobalConfigRepository {
   }
 
   async findConfig(): Promise<GlobalConfig> {
-    const confMap = await this.paramsFileRepo.parse(this.globalConfigFilePath);
+    const confMap = await this.confFileRepo.parse(this.globalConfigFilePath);
     return GlobalConfig.fromMap(confMap);
   }
 
   async updateConfig(
     updateGlobalConfigDto: UpdateGlobalConfigDto,
   ): Promise<GlobalConfig> {
-    const confMap = await this.paramsFileRepo.parse(this.globalConfigFilePath);
+    const confMap = await this.confFileRepo.parse(this.globalConfigFilePath);
     if (updateGlobalConfigDto.globalIpAddress) {
       confMap.set(
         GlobalConfigConstants.PARAMS_GLOBAL_IP_ADDRESS,
@@ -51,7 +51,7 @@ export class GlobalConfigRepositoryImpl implements GlobalConfigRepository {
       );
     }
 
-    await this.paramsFileRepo.update(this.globalConfigFilePath, confMap);
+    await this.confFileRepo.update(this.globalConfigFilePath, confMap);
 
     return GlobalConfig.fromMap(confMap);
   }

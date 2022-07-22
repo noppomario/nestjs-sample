@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ConfFileSharedModule } from '../conf-file-shared/conf-file-shared.module';
+import { ConfFileModule } from '../conf-file/conf-file.module';
 import { GlobalConfigController } from './global-config.controller';
 import { GlobalConfigRepositoryImpl } from './global-config.repository.impl';
 import { GlobalConfigServiceImpl } from './global-config.service.impl';
@@ -10,7 +10,7 @@ import { GLOBAL_CONFIG_SERVICE } from './interfaces/global-config.service';
  * グローバル設定モジュール
  */
 @Module({
-  imports: [ConfFileSharedModule],
+  imports: [ConfFileModule],
   controllers: [GlobalConfigController],
   providers: [
     {
