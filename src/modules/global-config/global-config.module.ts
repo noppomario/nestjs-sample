@@ -6,6 +6,9 @@ import { GlobalConfigServiceImpl } from './global-config.service.impl';
 import { GLOBAL_CONFIG_REPOSITORY } from './interfaces/global-config.repository';
 import { GLOBAL_CONFIG_SERVICE } from './interfaces/global-config.service';
 
+/**
+ * グローバル設定モジュール
+ */
 @Module({
   imports: [ConfFileSharedModule],
   controllers: [GlobalConfigController],

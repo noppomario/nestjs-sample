@@ -1,5 +1,8 @@
 import { IsIP, IsOptional, ValidateIf } from 'class-validator';
 
+/**
+ * グローバル設定更新用DTO
+ */
 export class UpdateGlobalConfigDto {
   /**
    * グローバルIPアドレス

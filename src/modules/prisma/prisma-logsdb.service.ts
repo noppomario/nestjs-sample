@@ -1,5 +1,5 @@
 import { INestApplication, Injectable, OnModuleInit } from '@nestjs/common';
-// 事前に生成した@internal内のclientを参照する
+// @internal内の事前に生成したclientを参照する
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { PrismaClient } from '@internal/prisma/client';
 

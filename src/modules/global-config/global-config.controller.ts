@@ -6,8 +6,16 @@ import {
 import { UpdateGlobalConfigDto } from './dto/update-global-config.dto';
 import { GlobalConfig } from './entities/global-config.entity';
 
+/**
+ * グローバル設定コントローラ
+ */
 @Controller('global-config')
 export class GlobalConfigController {
+  /**
+   * コンストラクタ
+   *
+   * @param globalConfigService グローバル設定サービスインターフェース
+   */
   constructor(
     @Inject(GLOBAL_CONFIG_SERVICE)
     private readonly globalConfigService: GlobalConfigService,
