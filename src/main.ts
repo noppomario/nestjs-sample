@@ -7,6 +7,7 @@ import {
 import { NestFactory, Reflector } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
 import helmet from 'helmet';
+import { Logger, LoggerErrorInterceptor } from 'nestjs-pino';
 import { AppModule } from './app.module';
 import { PrismaUsersdbService } from './modules/prisma/prisma-usersdb.service';
 import { TransformInterceptor } from './interceptors/transform.interceptor';
@@ -18,10 +19,13 @@ import { PrismaLogsdbService } from './modules/prisma/prisma-logsdb.service';
  */
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
-    logger: ['error', 'warn', 'log', 'verbose', 'debug'],
+    bufferLogs: true,
   });
 
   const NODE_ENV = app.get(ConfigService).get('NODE_ENV');
+
+  // ログ設定
+  app.useLogger(app.get(Logger));
 
   // Prisma用シャットダウン設定
   const usersdbPrismaService = app.get(PrismaUsersdbService);
@@ -44,9 +48,11 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe(validOptions));
 
   // 全URLで有効化するInterceptor
+  // - エラーログの詳細表示
   // - Entityをレスポンス定義に合わせて修正(Serialization)
   // - 共通レスポンス化
   app.useGlobalInterceptors(
+    new LoggerErrorInterceptor(),
     new ClassSerializerInterceptor(app.get(Reflector)),
     new TransformInterceptor(),
   );
