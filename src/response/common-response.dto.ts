@@ -1,4 +1,4 @@
-import { ResponseMessageMap } from '../constants/response-message-map';
+import { ResponseMessageMap } from './response-message-map';
 
 /**
  * 共通レスポンス定義

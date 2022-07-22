@@ -10,8 +10,8 @@ import helmet from 'helmet';
 import { Logger, LoggerErrorInterceptor } from 'nestjs-pino';
 import { AppModule } from './app.module';
 import { PrismaUsersdbService } from './modules/prisma/prisma-usersdb.service';
-import { TransformInterceptor } from './interceptors/transform.interceptor';
-import { HttpExceptionFilter } from './exception-fillters/http-exception.fillter';
+import { TransformInterceptor } from './response/transform.interceptor';
+import { HttpExceptionFilter } from './response/http-exception.fillter';
 import { PrismaLogsdbService } from './modules/prisma/prisma-logsdb.service';
 
 /**

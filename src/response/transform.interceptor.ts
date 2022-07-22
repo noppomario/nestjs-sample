@@ -5,7 +5,7 @@ import {
   NestInterceptor,
 } from '@nestjs/common';
 import { map, Observable } from 'rxjs';
-import { CommonResponseDto } from '../dto/common-response.dto';
+import { CommonResponseDto } from './common-response.dto';
 
 /**
  * 共通仕様どおりにレスポンスを変換するためのInterceptor

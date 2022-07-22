@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Response } from 'express';
-import { CommonResponseDto } from '../dto/common-response.dto';
+import { CommonResponseDto } from './common-response.dto';
 
 /**
  * 共通仕様どおりにレスポンスを変換するための独自ExceptionFilter
