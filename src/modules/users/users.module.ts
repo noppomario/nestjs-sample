@@ -4,6 +4,9 @@ import { UsersServiceImpl } from './users.service.impl';
 import { USERS_SERVICE } from './interfaces/users.service';
 import { PrismaModule } from '../prisma/prisma.module';
 
+/**
+ * Usersモジュール
+ */
 @Module({
   imports: [PrismaModule],
   controllers: [UsersController],

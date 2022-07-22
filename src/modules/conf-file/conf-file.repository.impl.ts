@@ -3,7 +3,7 @@ import { readFile, writeFile } from 'fs/promises';
 import { ConfFileRepository } from './conf-file.repository';
 
 /**
- * 設定ファイルを扱うリポジトリの共通処理の実装クラス
+ * 設定ファイルリポジトリの実装クラス
  */
 @Injectable()
 export class ConfFileRepositoryImpl implements ConfFileRepository {

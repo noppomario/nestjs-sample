@@ -4,7 +4,7 @@
 export const CONF_FILE_REPOSITORY = Symbol('di-token');
 
 /**
- * 設定ファイルを扱うリポジトリの共通処理のインターフェース
+ * 設定ファイルリポジトリのインターフェース
  */
 export interface ConfFileRepository {
   /**
