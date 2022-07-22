@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ConfFileSharedModule } from 'src/shared-modules/conf-file-shared/conf-file-shared.module';
+import { ConfFileSharedModule } from '../conf-file-shared/conf-file-shared.module';
 import { GlobalConfigController } from './global-config.controller';
 import { GlobalConfigRepositoryImpl } from './global-config.repository.impl';
 import { GlobalConfigServiceImpl } from './global-config.service.impl';

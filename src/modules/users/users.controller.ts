@@ -8,8 +8,8 @@ import {
   Delete,
   Inject,
 } from '@nestjs/common';
-import { UpdateDtoFillter } from 'src/common/utils/update-dto-fillter';
 import { users } from '@prisma/client';
+import { UpdateDtoFillter } from 'src/utils/update-dto-fillter';
 import { UsersService, USERS_SERVICE } from './interfaces/users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';

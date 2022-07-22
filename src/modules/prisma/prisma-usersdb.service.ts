@@ -5,10 +5,7 @@ import { PrismaClient } from '@prisma/client';
  * Prismaクライアント(users.db)
  */
 @Injectable()
-export class UsersdbPrismaSharedService
-  extends PrismaClient
-  implements OnModuleInit
-{
+export class PrismaUsersdbService extends PrismaClient implements OnModuleInit {
   async onModuleInit() {
     await this.$connect();
   }

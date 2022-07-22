@@ -3,7 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import {
   ConfFileSharedRepository,
   CONF_FILE_SHARED_REPOSITORY,
-} from 'src/shared-modules/conf-file-shared/conf-file-shared.repository';
+} from '../conf-file-shared/conf-file-shared.repository';
 import { UpdateGlobalConfigDto } from './dto/update-global-config.dto';
 import { GlobalConfig } from './entities/global-config.entity';
 import { GlobalConfigConstants } from './global-config.constants';

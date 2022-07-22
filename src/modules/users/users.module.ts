@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
-import { PrismaSharedModule } from 'src/shared-modules/prisma-shared/prisma-shared.module';
 import { UsersController } from './users.controller';
 import { UsersServiceImpl } from './users.service.impl';
 import { USERS_SERVICE } from './interfaces/users.service';
+import { PrismaModule } from '../prisma/prisma.module';
 
 @Module({
-  imports: [PrismaSharedModule],
+  imports: [PrismaModule],
   controllers: [UsersController],
   providers: [
     {

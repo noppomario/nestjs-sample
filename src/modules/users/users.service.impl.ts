@@ -1,6 +1,6 @@
 import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { users } from '@prisma/client';
-import { UsersdbPrismaSharedService } from 'src/shared-modules/prisma-shared/usersdb-prisma-shared.service';
+import { PrismaUsersdbService } from '../prisma/prisma-usersdb.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersService } from './interfaces/users.service';
@@ -12,7 +12,7 @@ import { UsersService } from './interfaces/users.service';
 export class UsersServiceImpl implements UsersService {
   private readonly logger = new Logger(UsersServiceImpl.name);
 
-  constructor(private prisma: UsersdbPrismaSharedService) {}
+  constructor(private prisma: PrismaUsersdbService) {}
 
   async create(createUserDto: CreateUserDto): Promise<users> {
     return this.prisma.users.create({ data: createUserDto });

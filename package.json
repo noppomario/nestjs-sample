@@ -20,7 +20,7 @@
     "lint": "run-p -c -l lint:**",
     "lint:prettier": "prettier --check .",
     "lint:eslint": "eslint \"{src,apps,libs,test}/**/*.ts\"",
-    "lint:build": "nest build",
+    "lint:build": "npm run build:app",
     "fix": "run-s -l fix:**",
     "fix:prettier": "prettier --write .",
     "fix:eslint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
