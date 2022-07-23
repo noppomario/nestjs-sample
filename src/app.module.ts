@@ -1,5 +1,3 @@
-import { join } from 'path';
-import { ServeStaticModule } from '@nestjs/serve-static';
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
 import { LoggerModule } from 'nestjs-pino';
@@ -25,10 +23,6 @@ import { UsersModule } from './modules/users/users.module';
         allowUnknown: true,
         abortEarly: true,
       },
-    }),
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'docs/openapi'),
-      serveRoot: '/openapi',
     }),
     LoggerModule.forRoot({
       pinoHttp: {

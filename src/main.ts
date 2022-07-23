@@ -8,6 +8,10 @@ import { NestFactory, Reflector } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
 import helmet from 'helmet';
 import { Logger, LoggerErrorInterceptor } from 'nestjs-pino';
+import { SwaggerModule, OpenAPIObject } from '@nestjs/swagger';
+import { readFileSync } from 'fs';
+import { load } from 'js-yaml';
+import { join } from 'path';
 import { AppModule } from './app.module';
 import { PrismaUsersdbService } from './modules/prisma/prisma-usersdb.service';
 import { TransformInterceptor } from './response/transform.interceptor';
@@ -21,8 +25,6 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     bufferLogs: true,
   });
-
-  const NODE_ENV = app.get(ConfigService).get('NODE_ENV');
 
   // ログ設定
   app.useLogger(app.get(Logger));
@@ -62,18 +64,24 @@ async function bootstrap() {
   app.useGlobalFilters(new HttpExceptionFilter());
 
   // HTTPヘッダのセキュア化
-  if (NODE_ENV === 'production') {
-    app.use(helmet());
+  app.use(helmet());
+
+  // OpenAPI設定
+  const NODE_ENV = app.get(ConfigService).get('NODE_ENV');
+  const PORT = app.get(ConfigService).get('PORT');
+  if (NODE_ENV === 'development') {
+    const yml: Record<string, any> = load(
+      readFileSync(join(__dirname, 'docs/openapi-bundle.yaml'), 'utf8'),
+    );
+    const json: string = JSON.stringify(yml, null, 0);
+    const document: OpenAPIObject = JSON.parse(json);
+    SwaggerModule.setup('api', app, document);
+
+    // eslint-disable-next-line no-console
+    console.log(`API documentation: http://localhost:${PORT}/api/`);
   }
 
   // サーバ起動
-  const PORT = app.get(ConfigService).get('PORT');
   await app.listen(PORT);
-
-  // API仕様書のパスを表示(development)
-  if (NODE_ENV === 'development') {
-    // eslint-disable-next-line no-console
-    console.log(`API documentation: http://localhost:${PORT}/openapi/`);
-  }
 }
 bootstrap();

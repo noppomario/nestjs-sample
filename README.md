@@ -18,37 +18,114 @@ $ npm install
 ## 起動コマンド
 
 ```bash
-# development
+# developmentモード
 $ npm run start
 
-# watch mode
+# watchモード(ホットリロード)
 $ npm run start:dev
 
-# production mode
+# productionモード
 $ npm run start:prod
+```
+
+## 静的解析
+
+```bash
+# 実行
+$ npm run lint
+
+# 強制的に修正
+$ npm run fix
 ```
 
 ## テスト
 
 ```bash
-# unit tests
+# 単体テスト
 $ npm run test
 
-# e2e tests
+# e2eテスト
 $ npm run test:e2e
 
-# test coverage
+# テストカバレッジ
 $ npm run test:cov
+```
+
+## ドキュメント
+
+### API仕様書
+
+```bash
+# 1.サーバをdevelopmentモードで起動する
+$ npm run [start|start:dev]
+
+# 2.以下URLにアクセスする
+http://localhost:3000/api/
+```
+
+### 詳細設計書
+
+```bash
+# 1.以下コマンドでサーバを起動する
+$ npm run start:compodoc
+
+# 2.以下URLにアクセスする
+http://localhost:8080/
+```
+
+### 静的ファイル生成(Optional)
+
+```bash
+# ドキュメントファイルを生成する
+$ npm run doc
+
+出力先: dist/docs/
+```
+
+## OpenAPI Generator 
+
+```bash
+# API仕様書からコードを自動生成する
+$ npm run gen
+
+出力先: dist/client/angular/
+```
+
+## 生成ファイルのリセット
+
+```bash
+# distフォルダを削除
+$ npm run clean
 ```
 
 ## Tips
 
-### Non-class-based provider tokensについて
+### Non-class-based provider tokens
 
-JavaScriptにはinterfaceが存在しないため、TypeScriptのinterfaceは値の型として使用することはできない。  
-DIにTypeScriptのinterfaceを指定した場合、トランスパイル後にはオブジェクトの値が空になってしまう。  
-しかし、別途トークンを値として提供し、injectデコレータを使用することで、この問題を解決することができる。  
+JavaScriptにはInterfaceが存在しないため、TypeScriptのInterfaceは値の型として使用することはできない。  
+DIにTypeScriptのInterfaceを指定すると、トランスパイル後にはオブジェクトの値が空になってしまうが、  
+Injectデコレータにトークンを値として提供することで、この問題を解決することができる。  
 文字列だと定義自体が一意である必要があり考慮事項/ルールが増えるため、シンボルを使って定義する。  
+
+```ts
+// users.service.ts
+export const USERS_SERVICE = Symbol('di-token');
+export interface UsersService {
+  // ...
+}
+```
+
+```ts
+// users.controller.ts
+@Controller('users')
+export class UsersController {
+  constructor(
+    @Inject(USERS_SERVICE)
+    private readonly usersService: UsersService,
+  ) {}
+  // ...
+}
+```
 
 ## 参考
 
