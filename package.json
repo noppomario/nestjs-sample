@@ -17,7 +17,7 @@
     "start:dev::": "cross-env NODE_ENV=development nest start --watch",
     "start:debug": "run-s -l build:prisma1 build:prisma2 start:debug::",
     "start:debug::": "cross-env NODE_ENV=development nest start --debug --watch",
-    "start:prod": "cross-env NODE_ENV=production node dist/main",
+    "start:prod": "cross-env NODE_ENV=production node dist/main > ./logs/nestjs-sample.log",
     "start:compodoc": "compodoc -p tsconfig.json -d dist/docs/compodoc -s",
     "lint": "run-p -c -l lint:**",
     "lint:prettier": "prettier --check .",
