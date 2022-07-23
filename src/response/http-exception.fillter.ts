@@ -10,7 +10,7 @@ import { Response } from 'express';
 import { CommonResponseDto } from './common-response.dto';
 
 /**
- * 共通仕様どおりにレスポンスを変換するための独自ExceptionFilter
+ * 共通仕様どおりにレスポンスボディを変換するためのExceptionFilter
  */
 @Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter {
@@ -21,14 +21,13 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const response = context.getResponse<Response>();
     const status = exception.getStatus();
     const error = exception.getResponse();
+    const resBody = new CommonResponseDto(status, null, error);
 
-    // オリジナルの例外オブジェクトをログ出力
-    if (status >= 400 && status < 500) {
-      this.logger.warn(error);
-    } else {
-      this.logger.error(error);
-    }
+    this.logger.error(
+      { responseBody: resBody },
+      'レスポンスボディ変換(エラー)',
+    );
 
-    response.status(status).json(new CommonResponseDto(status, null, error));
+    response.status(status).json(resBody);
   }
 }

@@ -3,8 +3,8 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
 import { LoggerModule } from 'nestjs-pino';
-import { Module } from '@nestjs/common';
 import { v4 as uuid } from 'uuid';
+import { Module } from '@nestjs/common';
 import { GlobalConfigModule } from './modules/global-config/global-config.module';
 import { UsersModule } from './modules/users/users.module';
 
@@ -32,15 +32,25 @@ import { UsersModule } from './modules/users/users.module';
     }),
     LoggerModule.forRoot({
       pinoHttp: {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        customProps: (req, res) => ({
+        customProps: () => ({
           context: 'HTTP',
         }),
         genReqId: () => uuid(),
+        serializers: {
+          req: (req) => {
+            req.body = req.raw.body;
+            if (req.body.password) req.body.password = '*******';
+            if (req.body.email) req.body.email = '*******';
+            return req;
+          },
+        },
         transport: {
           target: 'pino-pretty',
           options: {
-            translateTime: true,
+            singleLine: true,
+            translateTime: 'SYS:standard',
+            messageFormat:
+              '[{req.id}] [{context}] {req.method} {req.url} {msg}',
           },
         },
       },

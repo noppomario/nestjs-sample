@@ -27,7 +27,7 @@ export class UsersServiceImpl implements UsersService {
       where: { id },
     });
     if (!user) {
-      this.logger.warn('Tried to access a user that does not exist');
+      this.logger.warn(`指定されたIDのユーザが見つからない id:${id}`); // ログ確認用
       throw new NotFoundException();
     }
     return user;
