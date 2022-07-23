@@ -4,6 +4,7 @@ import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
 import { LoggerModule } from 'nestjs-pino';
 import { Module } from '@nestjs/common';
+import { v4 as uuid } from 'uuid';
 import { GlobalConfigModule } from './modules/global-config/global-config.module';
 import { UsersModule } from './modules/users/users.module';
 
@@ -35,11 +36,12 @@ import { UsersModule } from './modules/users/users.module';
         customProps: (req, res) => ({
           context: 'HTTP',
         }),
+        genReqId: () => uuid(),
         transport: {
           target: 'pino-pretty',
-          // options: {
-          //   singleLine: true,
-          // },
+          options: {
+            translateTime: true,
+          },
         },
       },
     }),
