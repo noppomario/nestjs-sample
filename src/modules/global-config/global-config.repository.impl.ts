@@ -25,7 +25,7 @@ export class GlobalConfigRepositoryImpl implements GlobalConfigRepository {
     private readonly configService: ConfigService,
   ) {
     this.globalConfigFilePath = configService.get<string>(
-      'FILE_PATH_GLOBAL_CONFIG',
+      'CONF_FILE_PATH_GLOBAL_CONFIG',
     );
   }
 

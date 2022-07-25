@@ -1,4 +1,4 @@
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as Joi from 'joi';
 import { LoggerModule } from 'nestjs-pino';
 import { v4 as uuid } from 'uuid';
@@ -24,30 +24,41 @@ import { UsersModule } from './modules/users/users.module';
         abortEarly: true,
       },
     }),
-    LoggerModule.forRoot({
-      pinoHttp: {
-        customProps: () => ({
-          context: 'HTTP',
-        }),
-        genReqId: () => uuid(),
-        serializers: {
-          req: (req) => {
-            req.body = req.raw.body;
-            if (req.body.password) req.body.password = '*******';
-            if (req.body.email) req.body.email = '*******';
-            return req;
+    LoggerModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
+        pinoHttp: {
+          customProps: () => ({
+            context: 'HTTP',
+          }),
+          genReqId: () => uuid(),
+          serializers: {
+            req: (req) => {
+              // リクエストボディをログ出力するが、特定のプロパティはマスクする
+              req.body = req.raw.body;
+              if (req.body.password) req.body.password = '*******';
+              if (req.body.email) req.body.email = '*******';
+              return req;
+            },
+          },
+          transport: {
+            target: 'pino-pretty',
+            options: {
+              singleLine: true,
+              translateTime: 'SYS:standard',
+              messageFormat:
+                '[{req.id}] [{context}] {req.method} {req.url} {msg}',
+              destination:
+                configService.get('NODE_ENV') === 'production'
+                  ? configService.get('LOG_FILE_PATH')
+                  : 1, // STDOUT
+              sync: true,
+              append: true,
+              mkdir: true,
+            },
           },
         },
-        transport: {
-          target: 'pino-pretty',
-          options: {
-            singleLine: true,
-            translateTime: 'SYS:standard',
-            messageFormat:
-              '[{req.id}] [{context}] {req.method} {req.url} {msg}',
-          },
-        },
-      },
+      }),
     }),
     GlobalConfigModule,
     UsersModule,
