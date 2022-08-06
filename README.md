@@ -12,7 +12,7 @@
 ## 導入
 
 ```bash
-$ npm install
+npm install
 ```
 
 ## 起動コマンド
@@ -82,7 +82,7 @@ $ npm run doc
 出力先: dist/docs/
 ```
 
-## OpenAPI Generator 
+## OpenAPI Generator
 
 ```bash
 # API仕様書からコードを自動生成する
@@ -131,20 +131,20 @@ export class UsersController {
 
 ### 公式ドキュメント
 
-https://docs.nestjs.com
+<https://docs.nestjs.com>
 
 ### 日本語訳(v7)
 
-https://zenn.dev/kisihara_c/books/nest-officialdoc-jp
+<https://zenn.dev/kisihara_c/books/nest-officialdoc-jp>
 
 ### 公式サンプル
 
-https://github.com/nestjs/nest/tree/master/sample
+<https://github.com/nestjs/nest/tree/master/sample>
 
 ### チュートリアル
 
-https://wanago.io/2020/05/11/nestjs-api-controllers-routing-module/
+<https://wanago.io/2020/05/11/nestjs-api-controllers-routing-module/>
 
 ### チュートリアルサンプル
 
-https://github.com/mwanago/nestjs-typescript
+<https://github.com/mwanago/nestjs-typescript>
