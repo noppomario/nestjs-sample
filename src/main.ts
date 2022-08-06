@@ -15,7 +15,7 @@ import { join } from 'path';
 import { AppModule } from './app.module';
 import { PrismaUsersdbService } from './modules/prisma/prisma-usersdb.service';
 import { TransformInterceptor } from './response/transform.interceptor';
-import { HttpExceptionFilter } from './response/http-exception.fillter';
+import { HttpExceptionFilter } from './response/http-exception.filter';
 import { PrismaLogsdbService } from './modules/prisma/prisma-logsdb.service';
 
 /**
@@ -59,7 +59,7 @@ async function bootstrap() {
     new TransformInterceptor(),
   );
 
-  // 全URLで有効化するException Fillter
+  // 全URLで有効化するException Filter
   // - 共通レスポンス化/組み込み例外の日本語化
   app.useGlobalFilters(new HttpExceptionFilter());
 

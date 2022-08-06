@@ -3,7 +3,7 @@ import { BadRequestException } from '@nestjs/common';
 /**
  * 更新オブジェクトフィルター
  */
-export class UpdateDtoFillter {
+export class UpdateDtoFilter {
   /**
    * 引数で渡されたDTOから値がnullのプロパティを除去する
    *
@@ -13,7 +13,7 @@ export class UpdateDtoFillter {
    * @param updateDto 更新データ
    * @returns 値がnullのプロパティを除去したObject
    */
-  static nullFillter<T>(updateDto: T): { [k: string]: any } {
+  static nullFilter<T>(updateDto: T): { [k: string]: any } {
     const dto = Object.fromEntries(
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       Object.entries(updateDto).filter(([_, v]) => v != null),

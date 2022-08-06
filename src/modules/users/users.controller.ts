@@ -11,7 +11,7 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { users } from '@prisma/client';
-import { UpdateDtoFillter } from 'src/utils/update-dto-fillter';
+import { UpdateDtoFilter } from 'src/utils/update-dto-filter';
 import { UsersService, USERS_SERVICE } from './interfaces/users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -80,7 +80,7 @@ export class UsersController {
     id: number,
     @Body() updateUserDto: UpdateUserDto,
   ): Promise<users> {
-    const dto: UpdateUserDto = UpdateDtoFillter.nullFillter(updateUserDto);
+    const dto: UpdateUserDto = UpdateDtoFilter.nullFilter(updateUserDto);
     return this.usersService.update(id, dto);
   }
 

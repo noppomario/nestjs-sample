@@ -3,7 +3,7 @@ import { ResponseMessageMap } from './response-message-map';
 /**
  * 共通レスポンス定義
  * 成功時：Interceptorでレスポンス
- * エラー時: ExceptionFillterでレスポンス
+ * エラー時: ExceptionFilterでレスポンス
  *
  * レスポンス形式：
  * {
