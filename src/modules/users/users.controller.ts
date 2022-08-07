@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common';
 import { users } from '@prisma/client';
 import { UpdateDtoFilter } from 'src/utils/update-dto-filter';
-import { UsersService, USERS_SERVICE } from './interfaces/users.service';
+import { UsersService, USERS_SERVICE } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 

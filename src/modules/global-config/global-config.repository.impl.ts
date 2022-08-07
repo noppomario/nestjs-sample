@@ -7,7 +7,7 @@ import {
 import { UpdateGlobalConfigDto } from './dto/update-global-config.dto';
 import { GlobalConfig } from './entities/global-config.entity';
 import { GlobalConfigConstants } from './global-config.constants';
-import { GlobalConfigRepository } from './interfaces/global-config.repository';
+import { GlobalConfigRepository } from './global-config.repository';
 
 /**
  * グローバル設定リポジトリの実装クラス

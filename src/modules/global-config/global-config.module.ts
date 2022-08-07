@@ -3,8 +3,8 @@ import { ConfFileModule } from '../conf-file/conf-file.module';
 import { GlobalConfigController } from './global-config.controller';
 import { GlobalConfigRepositoryImpl } from './global-config.repository.impl';
 import { GlobalConfigServiceImpl } from './global-config.service.impl';
-import { GLOBAL_CONFIG_REPOSITORY } from './interfaces/global-config.repository';
-import { GLOBAL_CONFIG_SERVICE } from './interfaces/global-config.service';
+import { GLOBAL_CONFIG_REPOSITORY } from './global-config.repository';
+import { GLOBAL_CONFIG_SERVICE } from './global-config.service';
 
 /**
  * グローバル設定モジュール

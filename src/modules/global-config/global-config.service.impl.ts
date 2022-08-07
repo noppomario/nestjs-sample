@@ -4,8 +4,8 @@ import { GlobalConfig } from './entities/global-config.entity';
 import {
   GlobalConfigRepository,
   GLOBAL_CONFIG_REPOSITORY,
-} from './interfaces/global-config.repository';
-import { GlobalConfigService } from './interfaces/global-config.service';
+} from './global-config.repository';
+import { GlobalConfigService } from './global-config.service';
 
 /**
  * グローバル設定サービスの実装クラス

@@ -1,5 +1,5 @@
-import { UpdateGlobalConfigDto } from '../dto/update-global-config.dto';
-import { GlobalConfig } from '../entities/global-config.entity';
+import { UpdateGlobalConfigDto } from './dto/update-global-config.dto';
+import { GlobalConfig } from './entities/global-config.entity';
 
 /**
  * DI用トークン

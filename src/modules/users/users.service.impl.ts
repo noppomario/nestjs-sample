@@ -3,7 +3,7 @@ import { users } from '@prisma/client';
 import { PrismaUsersdbService } from '../prisma/prisma-usersdb.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { UsersService } from './interfaces/users.service';
+import { UsersService } from './users.service';
 
 /**
  * Usersサービスの実装クラス

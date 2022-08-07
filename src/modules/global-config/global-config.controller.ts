@@ -2,7 +2,7 @@ import { Controller, Get, Body, Patch, Inject } from '@nestjs/common';
 import {
   GlobalConfigService,
   GLOBAL_CONFIG_SERVICE,
-} from './interfaces/global-config.service';
+} from './global-config.service';
 import { UpdateGlobalConfigDto } from './dto/update-global-config.dto';
 import { GlobalConfig } from './entities/global-config.entity';
 
